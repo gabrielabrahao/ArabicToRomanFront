@@ -1,6 +1,8 @@
 import { RomanNumber, ArabicNumber } from './model/NumberConvert';
 import { ConverterNumbersService } from './converterNumbers.service';
 import { Component, OnInit } from '@angular/core';
+import { error } from '@angular/compiler/src/util';
+import { catchError } from 'rxjs';
 
 @Component({
   selector: 'app-converter',
@@ -15,7 +17,7 @@ export class ConverterComponent implements OnInit {
 
   }
 
-  valueArabic: String = "2";
+  valueArabic: String = "";
   valueRoman: String = "";
 
   valueArabicChanged:  any;
@@ -26,20 +28,34 @@ export class ConverterComponent implements OnInit {
   }
 
   public convertToRoman()  {
-    this.converterNumbersService.convertToRoman(parseInt(this.valueArabic.toString())).subscribe((romanNumber: RomanNumber) => {
+    if(!this.valueArabic) {
+      return window.alert('Informar Um valor.');
+    }
+    this.converterNumbersService.convertToRoman(parseInt(this.valueArabic.toString()))
+
+    .subscribe((romanNumber: RomanNumber) => {
         this.valueRomanChanged = romanNumber.romanNumber;
         this.valueArabic = "";
-        console.log(this.valueRomanChanged);
-      }
-    );
+      },
+      error => {
+        window.alert(error.message);
+    });
+
+
   }
 
   public convertToArabic(){
+    if(!this.valueRoman) {
+     return window.alert('Informar Um valor.');
+    }
    this.converterNumbersService.convertToArabic(this.valueRoman.toUpperCase()).subscribe((arabicNumber: ArabicNumber) => {
       this.valueArabicChanged = arabicNumber.arabicNumber?.toString();
       this.valueRoman = "";
-      console.log(this.valueArabicChanged);
+    },
+      error => {
+        window.alert(error.message);
     });
+
   }
 
 
