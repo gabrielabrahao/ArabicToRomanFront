@@ -1,0 +1,27 @@
+<form>
+  <div class="arabicToRamano">
+    <mat-form-field>
+      <label>Arabico para Romano</label>
+      <br />
+      <input matInput type="number" [(ngModel)]="valueArabic" name="name" />
+    </mat-form-field>
+    <button mat-raised-button (click)="convertToRoman()">Converter</button>
+
+    <div *ngIf="!!valueRomanChanged" class="arabicToRamanoResult">
+      <label>Resultado: {{ valueRomanChanged }}</label>
+    </div>
+  </div>
+
+  <br />
+  <div class="romanoToArabic">
+    <mat-form-field>
+      <label>Romano para Arabico</label>
+      <br />
+      <input matInput [(ngModel)]="valueRoman" name="name" />
+    </mat-form-field>
+    <button mat-raised-button (click)="convertToArabic()">Converter</button>
+    <div *ngIf="!!valueArabicChanged" class="RomanToArabicResult">
+      <label> Resultado: {{ valueArabicChanged }}</label>
+    </div>
+  </div>
+</form>
